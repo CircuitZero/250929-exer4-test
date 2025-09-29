@@ -1,9 +1,27 @@
 name: buildfork
 
 on:
-  workflow_dispatch:
+  push:
+    branches:
+      - main
 
 jobs:
+  deploy:
+   runs-on: ubuntu-latest
+   needs: build
+   environment:
+     name: production
+     url: http://flat-wound.surge.sh
+   steps:
+     - name: download build artifacts
+       uses: actions/download-artifact@v5.0.0
+       with:
+         name: build
+     - name: deploy
+       run: npx surge --project '.' --domain http://flat-wound.surge.sh
+       env:
+         SURGE_LOGIN: ${{ secrets.SURGE_LOGIN }}
+         SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
   build:
     runs-on: ubuntu-latest
     steps:
