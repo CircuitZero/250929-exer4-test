@@ -11,14 +11,14 @@ jobs:
    needs: build
    environment:
      name: production
-     url: http://flat-wound.surge.sh
+     url: http://melted-chickens07.surge.sh
    steps:
      - name: download build artifacts
        uses: actions/download-artifact@v5.0.0
        with:
          name: build
      - name: deploy
-       run: npx surge --project '.' --domain http://flat-wound.surge.sh
+       run: npx surge --project '.' --domain melted-chickens07.surge.sh
        env:
          SURGE_LOGIN: ${{ secrets.SURGE_LOGIN }}
          SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
